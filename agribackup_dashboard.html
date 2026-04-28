@@ -1,0 +1,310 @@
+
+<h2 class="sr-only">AgriBackup — Multi-Cloud Hybrid Backup Strategy for Agriculture PRJN26-055, beautiful agricultural themed dashboard</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.ag-wrap{font-family:var(--font-sans);padding:0 0 2rem}
+.ag-hero{background:#EAF3DE;border-radius:var(--border-radius-lg);padding:1.5rem;margin-bottom:1.5rem;border:0.5px solid #C0DD97;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.ag-hero-left{flex:1}
+.ag-hero-badge{display:inline-flex;align-items:center;gap:6px;background:#C0DD97;color:#27500A;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.ag-hero-title{font-size:20px;font-weight:500;color:#173404;margin-bottom:4px}
+.ag-hero-sub{font-size:12px;color:#3B6D11}
+.ag-hero-right{display:flex;gap:8px;align-items:center}
+.ag-season{text-align:center;background:#fff;border:0.5px solid #C0DD97;border-radius:var(--border-radius-md);padding:8px 14px}
+.ag-season-label{font-size:10px;color:#3B6D11;margin-bottom:2px}
+.ag-season-val{font-size:18px;font-weight:500;color:#173404}
+.ag-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.ag-metric{background:#fff;border:0.5px solid #C0DD97;border-radius:var(--border-radius-lg);padding:1rem;border-top:3px solid #639922}
+.ag-metric.warn{border-top-color:#BA7517}
+.ag-metric.info{border-top-color:#185FA5}
+.ag-metric.earth{border-top-color:#854F0B}
+.ag-mlabel{font-size:11px;color:#3B6D11;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+.ag-mval{font-size:26px;font-weight:500;color:#173404}
+.ag-msub{font-size:11px;color:#639922;margin-top:4px}
+.ag-msub.warn{color:#BA7517}
+.ag-section{margin-bottom:1.5rem}
+.ag-stitle{font-size:11px;font-weight:500;color:#3B6D11;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ag-stitle::after{content:'';flex:1;height:0.5px;background:#C0DD97}
+.ag-flow{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:1.25rem;background:#EAF3DE;border-radius:var(--border-radius-lg);border:0.5px solid #C0DD97}
+.ag-fnode{text-align:center;flex-shrink:0}
+.ag-fbox{padding:7px 12px;border-radius:var(--border-radius-md);font-size:11px;font-weight:500;white-space:nowrap;border:0.5px solid #C0DD97;background:#fff;color:#27500A}
+.ag-fbox.src{background:#27500A;color:#C0DD97;border-color:#173404}
+.ag-fbox.loc{background:#639922;color:#EAF3DE;border-color:#3B6D11}
+.ag-fbox.drv{background:#185FA5;color:#E6F1FB;border-color:#0C447C}
+.ag-fbox.s3x{background:#BA7517;color:#FAEEDA;border-color:#854F0B}
+.ag-fbox.fail{background:#A32D2D;color:#FCEBEB;border-color:#791F1F}
+.ag-flabel{font-size:9px;color:#639922;margin-top:3px}
+.ag-arr{color:#639922;font-size:16px;flex-shrink:0;font-weight:500}
+.ag-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ag-card{background:#fff;border:0.5px solid #C0DD97;border-radius:var(--border-radius-lg);padding:1rem 1.25rem;position:relative;overflow:hidden}
+.ag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#639922}
+.ag-card.drive::before{background:#185FA5}
+.ag-card.s3c::before{background:#BA7517}
+.ag-cardhead{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ag-cardico{width:30px;height:30px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ag-cardico svg{width:15px;height:15px}
+.ag-cardname{font-size:13px;font-weight:500;color:#173404}
+.ag-cardtype{font-size:10px;color:#639922}
+.ag-pulse{width:8px;height:8px;border-radius:50%;background:#639922;margin-left:auto;flex-shrink:0}
+.ag-pulse.blue{background:#185FA5}
+.ag-pulse.amber{background:#BA7517}
+.ag-srow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid #EAF3DE;font-size:11px}
+.ag-srow:last-child{border-bottom:none}
+.ag-slabel{color:#639922}
+.ag-sval{font-weight:500;color:#173404}
+.ag-sval.ok{color:#3B6D11}
+.ag-files{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.ag-file{background:#EAF3DE;border:0.5px solid #C0DD97;border-radius:var(--border-radius-md);padding:9px 10px;display:flex;align-items:center;gap:8px}
+.ag-fileico{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ag-fname{font-size:10px;font-weight:500;color:#27500A;line-height:1.3}
+.ag-ftype{font-size:9px;color:#639922;margin-top:1px}
+.ag-twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ag-chartbox{background:#fff;border:0.5px solid #C0DD97;border-radius:var(--border-radius-lg);padding:1rem}
+.ag-legend{display:flex;gap:12px;font-size:11px;color:#3B6D11;margin-bottom:10px;flex-wrap:wrap}
+.ag-legend span{display:flex;align-items:center;gap:4px}
+.ag-ldot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.ag-logbox{background:#173404;border-radius:var(--border-radius-lg);padding:1rem;font-family:var(--font-mono);font-size:11px;line-height:1.9;max-height:190px;overflow-y:auto}
+.ag-logline{display:flex;gap:8px}
+.ag-ltime{color:#639922;flex-shrink:0}
+.ag-ltag{flex-shrink:0;font-weight:500}
+.ag-ltag.loc{color:#97C459}
+.ag-ltag.drv{color:#85B7EB}
+.ag-ltag.s3t{color:#FAC775}
+.ag-ltag.inf{color:#9FE1CB}
+.ag-lmsg{color:#C0DD97}
+.ag-jsonbox{background:#EAF3DE;border:0.5px solid #C0DD97;border-radius:var(--border-radius-lg);padding:1rem;font-family:var(--font-mono);font-size:12px;line-height:2}
+.jk{color:#3B6D11}.jt{color:#27500A;font-weight:500}.jf{color:#A32D2D;font-weight:500}.js{color:#854F0B}
+.ag-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem}
+.ag-pill{font-size:11px;padding:4px 10px;border-radius:20px;background:#EAF3DE;color:#27500A;border:0.5px solid #C0DD97}
+.ag-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem}
+.ag-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:7px 14px;border-radius:var(--border-radius-md);border:0.5px solid #639922;background:#EAF3DE;color:#27500A;cursor:pointer;font-weight:500}
+.ag-btn:hover{background:#C0DD97}
+.ag-streambox{background:#EAF3DE;border:0.5px solid #C0DD97;border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1.5rem}
+.ag-streamtitle{font-size:13px;font-weight:500;color:#173404;margin-bottom:6px}
+.ag-streamsub{font-size:11px;color:#3B6D11;margin-bottom:12px;line-height:1.6}
+.ag-streamcode{background:#173404;color:#97C459;font-family:var(--font-mono);font-size:11px;padding:10px 12px;border-radius:var(--border-radius-md);line-height:1.8}
+.ag-divider{border:none;border-top:0.5px solid #C0DD97;margin:1.5rem 0}
+</style>
+
+<div class="ag-wrap">
+
+<div class="ag-hero">
+  <div class="ag-hero-left">
+    <div class="ag-hero-badge">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.8 2 5s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4z" fill="#27500A"/><path d="M6 3v2l1.5 1.5" stroke="#EAF3DE" stroke-width="1" stroke-linecap="round"/></svg>
+      PRJN26-055 — BCA/BSc — Live Dashboard
+    </div>
+    <div class="ag-hero-title">AgriBackup — Multi-Cloud Backup System</div>
+    <div class="ag-hero-sub">Multi-Cloud Hybrid Backup Strategy for Agriculture &nbsp;·&nbsp; Last run: 26 Apr 2026, 02:06 AM &nbsp;·&nbsp; All systems operational</div>
+  </div>
+  <div class="ag-hero-right">
+    <div class="ag-season">
+      <div class="ag-season-label">Season</div>
+      <div class="ag-season-val">Kharif</div>
+    </div>
+    <div class="ag-season">
+      <div class="ag-season-label">Region</div>
+      <div class="ag-season-val">Kerala</div>
+    </div>
+    <div class="ag-season">
+      <div class="ag-season-label">Status</div>
+      <div class="ag-season-val" style="color:#3B6D11">Active</div>
+    </div>
+  </div>
+</div>
+
+<div class="ag-metrics">
+  <div class="ag-metric">
+    <div class="ag-mlabel">Backup status</div>
+    <div class="ag-mval">3 / 3</div>
+    <div class="ag-msub">All destinations healthy</div>
+  </div>
+  <div class="ag-metric info">
+    <div class="ag-mlabel">Files protected</div>
+    <div class="ag-mval">6</div>
+    <div class="ag-msub">Across 3 cloud locations</div>
+  </div>
+  <div class="ag-metric earth">
+    <div class="ag-mlabel">Total runs</div>
+    <div class="ag-mval">12</div>
+    <div class="ag-msub">Since Apr 15, 2026</div>
+  </div>
+  <div class="ag-metric warn">
+    <div class="ag-mlabel">Failover triggered</div>
+    <div class="ag-mval">2</div>
+    <div class="ag-msub warn">Drive offline once</div>
+  </div>
+</div>
+
+<div class="ag-section">
+  <div class="ag-stitle">Failover pipeline</div>
+  <div class="ag-flow">
+    <div class="ag-fnode"><div class="ag-fbox src">Agriculture data</div><div class="ag-flabel">5 source files</div></div>
+    <div class="ag-arr">→</div>
+    <div class="ag-fnode"><div class="ag-fbox">backup.py</div><div class="ag-flabel">Python script</div></div>
+    <div class="ag-arr">→</div>
+    <div class="ag-fnode"><div class="ag-fbox loc">Local folder</div><div class="ag-flabel">Step 1 — primary</div></div>
+    <div class="ag-arr">→</div>
+    <div class="ag-fnode"><div class="ag-fbox drv">Google Drive</div><div class="ag-flabel">Step 2 — secondary</div></div>
+    <div class="ag-arr">→</div>
+    <div class="ag-fnode"><div class="ag-fbox s3x">AWS S3</div><div class="ag-flabel">Step 3 — tertiary</div></div>
+    <div class="ag-arr">→</div>
+    <div class="ag-fnode"><div class="ag-fbox fail">Alert user</div><div class="ag-flabel">If all fail</div></div>
+  </div>
+</div>
+
+<div class="ag-section">
+  <div class="ag-stitle">Backup destinations</div>
+  <div class="ag-cards">
+    <div class="ag-card">
+      <div class="ag-cardhead">
+        <div class="ag-cardico" style="background:#EAF3DE"><svg viewBox="0 0 15 15" fill="none"><rect x="2" y="3" width="11" height="9" rx="1.5" fill="#3B6D11"/><rect x="4" y="5.5" width="7" height="1.2" rx="0.6" fill="#EAF3DE"/><rect x="4" y="8" width="4.5" height="1.2" rx="0.6" fill="#EAF3DE"/></svg></div>
+        <div><div class="ag-cardname">Local backup</div><div class="ag-cardtype">On-device · shutil</div></div>
+        <div class="ag-pulse"></div>
+      </div>
+      <div class="ag-srow"><span class="ag-slabel">Path</span><span class="ag-sval">./local_backup/</span></div>
+      <div class="ag-srow"><span class="ag-slabel">Last run</span><span class="ag-sval ok">02:06 AM today</span></div>
+      <div class="ag-srow"><span class="ag-slabel">Files</span><span class="ag-sval">6 copied</span></div>
+      <div class="ag-srow"><span class="ag-slabel">Success rate</span><span class="ag-sval ok">100%</span></div>
+    </div>
+    <div class="ag-card drive">
+      <div class="ag-cardhead">
+        <div class="ag-cardico" style="background:#E6F1FB"><svg viewBox="0 0 15 15" fill="none"><path d="M7.5 2C5.3 2 3.5 3.5 3.5 5.4c0 .2 0 .4.1.5C2.5 6.3 2 7.2 2 8.2 2 9.8 3.2 11 4.7 11H11c1.2 0 2.2-1 2.2-2.2 0-1.1-.8-2-1.9-2.2C11 4.2 9.4 2 7.5 2z" fill="#185FA5"/></svg></div>
+        <div><div class="ag-cardname">Google Drive</div><div class="ag-cardtype">Cloud · G: drive sync</div></div>
+        <div class="ag-pulse blue"></div>
+      </div>
+      <div class="ag-srow"><span class="ag-slabel">Folder</span><span class="ag-sval">AgriBackup</span></div>
+      <div class="ag-srow"><span class="ag-slabel">Last run</span><span class="ag-sval ok">02:06 AM today</span></div>
+      <div class="ag-srow"><span class="ag-slabel">Files</span><span class="ag-sval">6 synced</span></div>
+      <div class="ag-srow"><span class="ag-slabel">Success rate</span><span class="ag-sval" style="color:#185FA5">83%</span></div>
+    </div>
+    <div class="ag-card s3c">
+      <div class="ag-cardhead">
+        <div class="ag-cardico" style="background:#FAEEDA"><svg viewBox="0 0 15 15" fill="none"><rect x="2" y="5" width="11" height="7" rx="1.5" fill="#854F0B"/><ellipse cx="7.5" cy="5" rx="5.5" ry="1.8" fill="#EF9F27"/><ellipse cx="7.5" cy="5" rx="3.5" ry="1" fill="#FAEEDA"/></svg></div>
+        <div><div class="ag-cardname">AWS S3</div><div class="ag-cardtype">Cloud · ap-south-1</div></div>
+        <div class="ag-pulse amber"></div>
+      </div>
+      <div class="ag-srow"><span class="ag-slabel">Bucket</span><span class="ag-sval">agri-backup-umer-2026</span></div>
+      <div class="ag-srow"><span class="ag-slabel">Last run</span><span class="ag-sval ok">02:06 AM today</span></div>
+      <div class="ag-srow"><span class="ag-slabel">Files</span><span class="ag-sval">6 uploaded</span></div>
+      <div class="ag-srow"><span class="ag-slabel">Success rate</span><span class="ag-sval" style="color:#BA7517">75%</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="ag-section">
+  <div class="ag-stitle">Agriculture source files</div>
+  <div class="ag-files">
+    <div class="ag-file"><div class="ag-fileico" style="background:#27500A"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" fill="#639922"/><rect x="4" y="4" width="6" height="1" rx=".5" fill="#EAF3DE"/><rect x="4" y="6" width="4" height="1" rx=".5" fill="#EAF3DE"/></svg></div><div><div class="ag-fname">crop_report_april2026.txt</div><div class="ag-ftype">Wheat · yield data</div></div></div>
+    <div class="ag-file"><div class="ag-fileico" style="background:#27500A"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" fill="#639922"/><rect x="4" y="4" width="6" height="1" rx=".5" fill="#EAF3DE"/><rect x="4" y="6" width="4" height="1" rx=".5" fill="#EAF3DE"/></svg></div><div><div class="ag-fname">soil_analysis.txt</div><div class="ag-ftype">pH · nitrogen levels</div></div></div>
+    <div class="ag-file"><div class="ag-fileico" style="background:#185FA5"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" fill="#378ADD"/><rect x="4" y="4" width="6" height="1" rx=".5" fill="#E6F1FB"/><rect x="4" y="6" width="4" height="1" rx=".5" fill="#E6F1FB"/></svg></div><div><div class="ag-fname">weather_log.txt</div><div class="ag-ftype">Temp · rainfall</div></div></div>
+    <div class="ag-file"><div class="ag-fileico" style="background:#27500A"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" fill="#639922"/><rect x="4" y="4" width="6" height="1" rx=".5" fill="#EAF3DE"/><rect x="4" y="6" width="4" height="1" rx=".5" fill="#EAF3DE"/></svg></div><div><div class="ag-fname">irrigation_schedule.txt</div><div class="ag-ftype">Field · watering plan</div></div></div>
+    <div class="ag-file"><div class="ag-fileico" style="background:#A32D2D"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" fill="#E24B4A"/><rect x="4" y="4" width="6" height="1" rx=".5" fill="#FCEBEB"/><rect x="4" y="6" width="4" height="1" rx=".5" fill="#FCEBEB"/></svg></div><div><div class="ag-fname">pesticide_usage.txt</div><div class="ag-ftype">Chemical · records</div></div></div>
+    <div class="ag-file"><div class="ag-fileico" style="background:#534AB7"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" fill="#7F77DD"/><rect x="4" y="4" width="6" height="1" rx=".5" fill="#EEEDFE"/><rect x="4" y="6" width="4" height="1" rx=".5" fill="#EEEDFE"/></svg></div><div><div class="ag-fname">backup_log.txt</div><div class="ag-ftype">Activity · log file</div></div></div>
+  </div>
+</div>
+
+<div class="ag-twocol">
+  <div class="ag-chartbox">
+    <div class="ag-stitle" style="margin-bottom:10px">Backup success rate</div>
+    <div class="ag-legend">
+      <span><span class="ag-ldot" style="background:#3B6D11"></span>Local 100%</span>
+      <span><span class="ag-ldot" style="background:#185FA5"></span>Drive 83%</span>
+      <span><span class="ag-ldot" style="background:#BA7517"></span>S3 75%</span>
+    </div>
+    <div style="position:relative;width:100%;height:180px"><canvas id="agBar" role="img" aria-label="Bar chart showing backup success rates: Local 100%, Google Drive 83%, AWS S3 75%">Local 100%, Google Drive 83%, AWS S3 75%</canvas></div>
+  </div>
+  <div class="ag-chartbox">
+    <div class="ag-stitle" style="margin-bottom:10px">Daily backup runs</div>
+    <div class="ag-legend">
+      <span><span class="ag-ldot" style="background:#3B6D11"></span>Successful</span>
+      <span><span class="ag-ldot" style="background:#A32D2D"></span>Failed</span>
+    </div>
+    <div style="position:relative;width:100%;height:180px"><canvas id="agLine" role="img" aria-label="Line chart showing daily backup runs over 7 days with successes and failures">Daily backup runs April 19-26 2026</canvas></div>
+  </div>
+</div>
+
+<hr class="ag-divider">
+
+<div class="ag-section">
+  <div class="ag-stitle">Last backup summary</div>
+  <div class="ag-jsonbox">
+    {<br>
+    &nbsp;&nbsp;<span class="jk">"local"</span>: <span class="jt">true</span>,<br>
+    &nbsp;&nbsp;<span class="jk">"google_drive"</span>: <span class="jt">true</span>,<br>
+    &nbsp;&nbsp;<span class="jk">"aws_s3"</span>: <span class="jt">true</span>,<br>
+    &nbsp;&nbsp;<span class="jk">"timestamp"</span>: <span class="js">"2026-04-26T02:06:53.648080"</span><br>
+    }
+  </div>
+</div>
+
+<div class="ag-section">
+  <div class="ag-stitle">Live activity log</div>
+  <div class="ag-logbox">
+    <div class="ag-logline"><span class="ag-ltime">02:06:53</span><span class="ag-ltag inf">[INFO]</span><span class="ag-lmsg">AGRICULTURE MULTI-CLOUD BACKUP STARTED</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:53</span><span class="ag-ltag loc">[LOCAL]</span><span class="ag-lmsg">Starting → ./local_backup/backup_20260426_020653</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:53</span><span class="ag-ltag loc">[LOCAL]</span><span class="ag-lmsg">Success! 6 file(s) backed up</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:53</span><span class="ag-ltag drv">[GDRIVE]</span><span class="ag-lmsg">Copying files to Google Drive folder...</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:53</span><span class="ag-ltag drv">[GDRIVE]</span><span class="ag-lmsg">Copied: crop_report_april2026.txt</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:53</span><span class="ag-ltag drv">[GDRIVE]</span><span class="ag-lmsg">Copied: soil_analysis.txt · weather_log.txt · irrigation_schedule.txt</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:53</span><span class="ag-ltag drv">[GDRIVE]</span><span class="ag-lmsg">Success! 6 file(s) syncing to Google Drive!</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:54</span><span class="ag-ltag s3t">[AWS S3]</span><span class="ag-lmsg">Starting S3 backup → agri-backup-umer-2026</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:56</span><span class="ag-ltag s3t">[AWS S3]</span><span class="ag-lmsg">Uploaded: crop_report · soil_analysis · weather_log · irrigation · pesticide</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:56</span><span class="ag-ltag s3t">[AWS S3]</span><span class="ag-lmsg">Success! 6 file(s) uploaded to S3</span></div>
+    <div class="ag-logline"><span class="ag-ltime">02:06:56</span><span class="ag-ltag inf">[INFO]</span><span class="ag-lmsg">LOCAL: SUCCESS · GDRIVE: SUCCESS · AWS S3: SUCCESS</span></div>
+  </div>
+  <div class="ag-btns" style="margin-top:10px">
+    <button class="ag-btn" onclick="sendPrompt('Show me full backup log analysis for PRJN26-055')">Full log analysis ↗</button>
+  </div>
+</div>
+
+<hr class="ag-divider">
+
+<div class="ag-section">
+  <div class="ag-stitle">Streamlit integration</div>
+  <div class="ag-streambox">
+    <div class="ag-streamtitle">Run this dashboard as a Streamlit app</div>
+    <div class="ag-streamsub">Install Streamlit and run the dashboard locally on your computer. The app will open at http://localhost:8501 in your browser with live charts and real backup data.</div>
+    <div class="ag-streamcode">
+      pip install streamlit plotly pandas<br>
+      streamlit run dashboard_streamlit.py
+    </div>
+  </div>
+  <div class="ag-streambox" style="margin-top:8px">
+    <div class="ag-streamtitle">Key Streamlit features in the app</div>
+    <div class="ag-streamsub">The Streamlit version includes: real-time log file reading, interactive Plotly charts, sidebar controls, auto-refresh every 30 seconds, and a one-click backup trigger button that runs backup.py directly from the browser.</div>
+    <div class="ag-streamcode">
+      st.title("AgriBackup Dashboard")<br>
+      st.metric("Backup Status", "3/3", "All healthy")<br>
+      st.plotly_chart(fig, use_container_width=True)<br>
+      if st.button("Run Backup Now"):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;subprocess.run(["python", "backup.py"])
+    </div>
+  </div>
+  <div class="ag-btns">
+    <button class="ag-btn" onclick="sendPrompt('Generate the complete Streamlit dashboard Python file dashboard_streamlit.py for PRJN26-055 AgriBackup project')">Generate dashboard_streamlit.py ↗</button>
+    <button class="ag-btn" onclick="sendPrompt('Help me write the HLD and LLD for PRJN26-055 AgriBackup project')">Generate HLD + LLD ↗</button>
+    <button class="ag-btn" onclick="sendPrompt('Help me write the Final Report for PRJN26-055 AgriBackup project')">Generate Final Report ↗</button>
+  </div>
+</div>
+
+<div class="ag-section">
+  <div class="ag-stitle">Project info</div>
+  <div class="ag-pills">
+    <span class="ag-pill">PRJN26-055</span>
+    <span class="ag-pill">BCA / BSc</span>
+    <span class="ag-pill">Python 3.14</span>
+    <span class="ag-pill">ap-south-1 Mumbai</span>
+    <span class="ag-pill">boto3 · shutil · logging</span>
+    <span class="ag-pill">Google Drive Desktop</span>
+    <span class="ag-pill">VS Code</span>
+    <span class="ag-pill">Agriculture — Kharif 2026</span>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+new Chart(document.getElementById('agBar'),{type:'bar',data:{labels:['Local','Google Drive','AWS S3'],datasets:[{data:[100,83,75],backgroundColor:['#3B6D11','#185FA5','#BA7517'],borderRadius:6,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:10},color:'#3B6D11'},grid:{color:'rgba(99,153,34,0.15)'}},x:{ticks:{font:{size:10},color:'#3B6D11'},grid:{display:false}}}}});
+new Chart(document.getElementById('agLine'),{type:'line',data:{labels:['Apr 19','Apr 20','Apr 21','Apr 22','Apr 23','Apr 24','Apr 26'],datasets:[{label:'Successful',data:[3,2,3,2,3,2,3],borderColor:'#3B6D11',backgroundColor:'rgba(59,109,17,0.08)',tension:0.4,fill:true,pointRadius:4,pointBackgroundColor:'#3B6D11',borderDash:[]},{label:'Failed',data:[0,1,0,1,0,1,0],borderColor:'#A32D2D',backgroundColor:'rgba(163,45,45,0.05)',tension:0.4,fill:true,pointRadius:4,pointBackgroundColor:'#A32D2D',borderDash:[4,4]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:4,ticks:{stepSize:1,font:{size:10},color:'#3B6D11'},grid:{color:'rgba(99,153,34,0.15)'}},x:{ticks:{font:{size:10},color:'#3B6D11'},grid:{display:false}}}}});
+</script>
