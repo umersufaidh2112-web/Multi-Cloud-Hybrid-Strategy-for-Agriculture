@@ -1,0 +1,4 @@
+Chemical: Endosulfan
+Quantity: 2L/acre
+Applied: 2026-03-15
+Next Due: 2026-04-15

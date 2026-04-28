@@ -1,0 +1,4 @@
+pH Level: 6.8
+Nitrogen: High
+Phosphorus: Medium
+Moisture: 32%

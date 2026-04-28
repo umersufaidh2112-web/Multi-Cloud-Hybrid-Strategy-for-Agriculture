@@ -1,0 +1,4 @@
+Crop: Wheat
+Yield: 4.2 tons/hectare
+Season: Rabi 2025-26
+Status: Good

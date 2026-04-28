@@ -1,0 +1,3 @@
+Field A: Mon, Wed, Fri - 6AM
+Field B: Tue, Thu - 5AM
+Field C: Daily - 7AM
